@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "168428382630",
+    "firebase_url": "https://debatetracker-75c01.firebaseio.com",
+    "project_id": "debatetracker-75c01",
+    "storage_bucket": "debatetracker-75c01.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:168428382630:android:393e9d78bce9f1c48a0767",
+        "android_client_info": {
+          "package_name": "com.example.debatetracker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "168428382630-isvk4i2nhg1k609u16a6eip0ith23p09.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDbsdi83KzkkzGIqCx0WF4JU7YtbtP6w3A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "168428382630-isvk4i2nhg1k609u16a6eip0ith23p09.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
