@@ -13,6 +13,10 @@ public class HomeViewModel extends ViewModel {
         mText.setValue("This is home fragment");
     }
 
+    public void testText(String text) {
+        mText.setValue(text);
+    }
+
     public LiveData<String> getText() {
         return mText;
     }

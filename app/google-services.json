@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "168428382630-76crd4jvtjbbkfrmj9jjc2egqcm99jn8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.debatetracker",
+            "certificate_hash": "207cb68fec98570e8a73ad65b7251475de2dfa56"
+          }
+        },
+        {
           "client_id": "168428382630-isvk4i2nhg1k609u16a6eip0ith23p09.apps.googleusercontent.com",
           "client_type": 3
         }
