@@ -2,7 +2,10 @@ package com.example.debatetracker;
 
 import android.os.Bundle;
 
-import com.example.debatetracker.ui.home.HomeViewModel;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -20,6 +23,7 @@ import androidx.navigation.ui.NavigationUI;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 
@@ -27,7 +31,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.view.Menu;
-import android.widget.Toast;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -36,18 +45,81 @@ public class MainActivity extends AppCompatActivity {
     public static final String CHANNEL_NAME = "notification";
     public static final String CHANNEL_DESC = "first notification";
 
+    private String FCM_API = "https://fcm.googleapis.com/fcm/send";
+    private String serverKey = "key=AAAAJzcdKaY:APA91bFj7byTGVMWLYp7NVC26FFLKlAtSjCuLvruHwuMqggbq6S1DKLkcu3kmGrXhIO5MbDbNyF3edvlG4pKIMDWv6tD5zVtoJFvQtWAz_FTBH-Si-DkMZlIiCocDhUZMx2S8ROwQUU2";
+    private String contentType = "application/json";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
+
+        // Initiate http facade
+        HttpFacade.loadInstance(getApplicationContext());
+        FirebaseMessaging.getInstance().subscribeToTopic("/topics/topic_name");
+
         setSupportActionBar(toolbar);
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+
+                String topic = "/topics/topic_name";
+
+                JSONObject notification = new JSONObject();
+                JSONObject notificationBody = new JSONObject();
+
+                try {
+                    notificationBody.put("title", "Broadcast");
+                    notificationBody.put("body", "Notification Broadcast");
+                    notification.put("to", topic);
+                    notification.put("notification", notificationBody);
+                    Log.e("Send notif setup", "try");
+                } catch (JSONException e) {
+                    Log.e("Send notif setup", "onCreate:" + e.getMessage());
+                }
+
+                sendNotification(notification);
+
+                Snackbar.make(view, "Notification broadcast ! :)", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+            }
+
+            private void sendNotification(JSONObject notification) {
+                Log.i("Sending notif", "sendNotification");
+
+                HttpFacade httpFacade = HttpFacade.getInstance();
+                JsonObjectRequest request = new JsonObjectRequest(
+                        Request.Method.POST,
+                        FCM_API,
+                        notification,
+                        new Response.Listener<JSONObject>() {
+
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                Log.i("Notif", "Broadcast succeeded");
+                            }
+                        },
+                        new Response.ErrorListener() {
+
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Log.e("Notif", "Broadcast failed " + error.getMessage());
+                            }
+                        }
+                ) {
+                    @Override
+                    public Map<String, String> getHeaders(){
+                        Map<String, String> params = new HashMap();
+                        params.put("Authorization", serverKey);
+                        params.put("Content-Type", contentType);
+                        return params;
+                    }
+                    
+                };
+
+                httpFacade.addToRequestQueue(request);
             }
         });
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
