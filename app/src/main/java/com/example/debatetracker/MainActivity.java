@@ -1,11 +1,13 @@
 package com.example.debatetracker;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.example.debatetracker.ui.login.LoginActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -21,6 +23,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -31,6 +34,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.view.Menu;
+import android.widget.Button;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -48,6 +52,10 @@ public class MainActivity extends AppCompatActivity {
     private String FCM_API = "https://fcm.googleapis.com/fcm/send";
     private String serverKey = "key=AAAAJzcdKaY:APA91bFj7byTGVMWLYp7NVC26FFLKlAtSjCuLvruHwuMqggbq6S1DKLkcu3kmGrXhIO5MbDbNyF3edvlG4pKIMDWv6tD5zVtoJFvQtWAz_FTBH-Si-DkMZlIiCocDhUZMx2S8ROwQUU2";
     private String contentType = "application/json";
+
+    Button btnLogout;
+    FirebaseAuth mFirebaseAuth;
+    private FirebaseAuth.AuthStateListener mAuthStateListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -152,6 +160,16 @@ public class MainActivity extends AppCompatActivity {
                        // Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
                     }
                 });
+
+        btnLogout = findViewById(R.id.logout);
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
+                Intent intToLogin = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(intToLogin);
+            }
+        });
     }
 
     @Override
