@@ -26,6 +26,7 @@
     <string name="question1">"You do not have an account yet? Register here"</string>
     <string name="question2">"You already have an account? Sign in here"</string>
     <string name="logout">Logout</string>
+    <string name="title_activity_debate_location">Debate Location</string>
 
 
 </resources>
