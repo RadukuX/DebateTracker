@@ -1,7 +1,5 @@
 package com.example.debatetracker.ui.qrcode;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Vibrator;
@@ -10,11 +8,14 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.debatetracker.R;
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.io.IOException;
 
@@ -74,8 +75,7 @@ public class QrScanner extends AppCompatActivity {
                         public void run() {
                             Vibrator vibrator = (Vibrator) getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
                             vibrator.vibrate(1000);
-                            textView.setText(qrCode.valueAt(0).displayValue);
-
+                            FirebaseMessaging.getInstance().subscribeToTopic("/topics/" + qrCode.valueAt(0).displayValue);
                         }
                     });
                 }

@@ -26,10 +26,10 @@
             android:layout_weight="1" />
 
         <Button
-            android:id="@+id/debate_subscribe"
-            android:layout_width="100dp"
+            android:id="@+id/debate_unsubscribe"
+            android:layout_width="137dp"
             android:layout_height="50dp"
-            android:text="Subscribe" />
+            android:text="Unsubscribe" />
     </LinearLayout>
 
 </LinearLayout>

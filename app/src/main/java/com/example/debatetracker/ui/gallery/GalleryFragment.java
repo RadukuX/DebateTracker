@@ -6,18 +6,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
 
 import com.example.debatetracker.R;
 import com.example.debatetracker.models.Debate;
@@ -27,11 +23,11 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 public class GalleryFragment extends Fragment {
@@ -165,7 +161,14 @@ public class GalleryFragment extends Fragment {
             debateDetails.setText(current.toString());
 
             Button locationsButton = (Button)myView.findViewById(R.id.debate_locations);
-            Button subscribeButton = (Button)myView.findViewById(R.id.debate_subscribe);
+            Button unsubscribeButton = (Button)myView.findViewById(R.id.debate_unsubscribe);
+
+            unsubscribeButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    FirebaseMessaging.getInstance().unsubscribeFromTopic("/topics/" + current.getName());
+                }
+            });
 
             locationsButton.setOnClickListener(new View.OnClickListener() {
 
