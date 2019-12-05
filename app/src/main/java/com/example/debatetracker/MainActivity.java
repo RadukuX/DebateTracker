@@ -8,6 +8,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.debatetracker.ui.login.LoginActivity;
+import com.example.debatetracker.ui.qrcode.QrScanner;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -54,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
     private String contentType = "application/json";
 
     Button btnLogout;
+    Button btnQrCode;
     FirebaseAuth mFirebaseAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
 
@@ -169,6 +171,12 @@ public class MainActivity extends AppCompatActivity {
                 Intent intToLogin = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(intToLogin);
             }
+        });
+
+        btnQrCode = findViewById(R.id.qrbutton);
+        btnQrCode.setOnClickListener((v)->{
+            Intent intent = new Intent(MainActivity.this, QrScanner.class);
+            startActivity(intent);
         });
     }
 

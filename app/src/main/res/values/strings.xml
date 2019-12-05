@@ -27,6 +27,8 @@
     <string name="question2">"You already have an account? Sign in here"</string>
     <string name="logout">Logout</string>
     <string name="title_activity_debate_location">Debate Location</string>
+    <string name="qrscan">QrScan</string>
+    <string name="map_key" translatable="false">AIzaSyB_qsP8AOP_P0MdlPz-48TDaJYjTP3vbjo</string>
 
 
 </resources>
