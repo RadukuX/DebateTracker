@@ -18,6 +18,7 @@
             android:id="@+id/debate_locations"
             android:layout_width="116dp"
             android:layout_height="50dp"
+            android:background="#FFF59D"
             android:text="Locations" />
 
         <Space
@@ -29,6 +30,7 @@
             android:id="@+id/debate_unsubscribe"
             android:layout_width="137dp"
             android:layout_height="50dp"
+            android:background="#FFF59D"
             android:text="Unsubscribe" />
     </LinearLayout>
 
