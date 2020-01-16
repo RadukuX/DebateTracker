@@ -1,14 +1,14 @@
 package com.example.debatetracker.ui.gallery;
 
-import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
-import androidx.fragment.app.FragmentActivity;
-
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.FragmentActivity;
 
 import com.example.debatetracker.R;
 import com.example.debatetracker.models.Location;
@@ -22,7 +22,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-
 
 import java.util.ArrayList;
 
@@ -83,29 +82,32 @@ public class DebateLocation extends FragmentActivity implements OnMapReadyCallba
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
-
-        if (currentLocation != null) {
-            LatLng latLng = new LatLng(currentLocation.getLatitude(),currentLocation.getLongitude());
-
-            MarkerOptions markerOptions = new MarkerOptions().position(latLng).title("My Location");
-            googleMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
-            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,10));
-            googleMap.addMarker(markerOptions);
-
-            mMap = googleMap;
-
-            // Add a marker in Sydney and move the camera
-            LatLng current = null;
-            for (Location l : markerLocations) {
-                if (l != null) {
-                    current = new LatLng(l.getLatitude(), l.getLongitude());
-                    mMap.addMarker(new MarkerOptions().position(current));
-                }
-            }
-
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(current));
-            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(current, 12.0f));
+        if (currentLocation == null) {
+            Location loc = markerLocations.iterator().next();
+            currentLocation = new android.location.Location("a");
+            currentLocation.setLatitude(loc.getLatitude());
+            currentLocation.setLongitude(loc.getLongitude());
         }
+
+        LatLng latLng = new LatLng(currentLocation.getLatitude(),currentLocation.getLongitude());
+
+        MarkerOptions markerOptions = new MarkerOptions().position(latLng).title("My Location");
+        googleMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
+        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,10));
+        googleMap.addMarker(markerOptions);
+
+        mMap = googleMap;
+
+        LatLng current = null;
+        for (Location l : markerLocations) {
+            if (l != null) {
+                current = new LatLng(l.getLatitude(), l.getLongitude());
+                mMap.addMarker(new MarkerOptions().position(current));
+            }
+        }
+
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude())));
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), 12.0f));
 
     }
 
