@@ -84,26 +84,29 @@ public class DebateLocation extends FragmentActivity implements OnMapReadyCallba
     @Override
     public void onMapReady(GoogleMap googleMap) {
 
-        LatLng latLng = new LatLng(currentLocation.getLatitude(),currentLocation.getLongitude());
+        if (currentLocation != null) {
+            LatLng latLng = new LatLng(currentLocation.getLatitude(),currentLocation.getLongitude());
 
-        MarkerOptions markerOptions = new MarkerOptions().position(latLng).title("My Location");
-        googleMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
-        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,10));
-        googleMap.addMarker(markerOptions);
+            MarkerOptions markerOptions = new MarkerOptions().position(latLng).title("My Location");
+            googleMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
+            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,10));
+            googleMap.addMarker(markerOptions);
 
-        mMap = googleMap;
+            mMap = googleMap;
 
-        // Add a marker in Sydney and move the camera
-        LatLng current = null;
-        for (Location l : markerLocations) {
-            if (l != null) {
-                current = new LatLng(l.getLatitude(), l.getLongitude());
-                mMap.addMarker(new MarkerOptions().position(current));
+            // Add a marker in Sydney and move the camera
+            LatLng current = null;
+            for (Location l : markerLocations) {
+                if (l != null) {
+                    current = new LatLng(l.getLatitude(), l.getLongitude());
+                    mMap.addMarker(new MarkerOptions().position(current));
+                }
             }
+
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(current));
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(current, 12.0f));
         }
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(current));
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(current, 12.0f));
     }
 
     @Override
