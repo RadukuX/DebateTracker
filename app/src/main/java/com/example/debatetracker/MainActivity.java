@@ -3,6 +3,7 @@ package com.example.debatetracker;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -54,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
 
     Button btnLogout;
     Button btnQrCode;
+    Button btnFeedBack;
     FirebaseAuth mFirebaseAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
 
@@ -110,7 +112,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         btnQrCode = findViewById(R.id.qrbutton);
-
         btnQrCode.setOnClickListener((v)->{
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, 123);
@@ -118,6 +119,13 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this, QrScanner.class);
                 startActivity(intent);
             }
+        });
+
+        btnFeedBack = findViewById(R.id.feedback);
+        btnFeedBack.setOnClickListener((v)->{
+            Uri uri = Uri.parse("https://forms.gle/vNyxsbNoTS3on6UT6");
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            startActivity(intent);
         });
     }
 
