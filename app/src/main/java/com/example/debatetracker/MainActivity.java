@@ -70,68 +70,6 @@ public class MainActivity extends AppCompatActivity {
         FirebaseMessaging.getInstance().subscribeToTopic("/topics/topic_name");
 
         setSupportActionBar(toolbar);
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                String topic = "/topics/topic_name";
-
-                JSONObject notification = new JSONObject();
-                JSONObject notificationBody = new JSONObject();
-
-                try {
-                    notificationBody.put("title", "Broadcast");
-                    notificationBody.put("body", "Notification Broadcast");
-                    notification.put("to", topic);
-                    notification.put("notification", notificationBody);
-                    Log.e("Send notif setup", "try");
-                } catch (JSONException e) {
-                    Log.e("Send notif setup", "onCreate:" + e.getMessage());
-                }
-
-                sendNotification(notification);
-
-                Snackbar.make(view, "Notification broadcast ! :)", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-
-            private void sendNotification(JSONObject notification) {
-                Log.i("Sending notif", "sendNotification");
-
-                HttpFacade httpFacade = HttpFacade.getInstance();
-                JsonObjectRequest request = new JsonObjectRequest(
-                        Request.Method.POST,
-                        FCM_API,
-                        notification,
-                        new Response.Listener<JSONObject>() {
-
-                            @Override
-                            public void onResponse(JSONObject response) {
-                                Log.i("Notif", "Broadcast succeeded");
-                            }
-                        },
-                        new Response.ErrorListener() {
-
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-                                Log.e("Notif", "Broadcast failed " + error.getMessage());
-                            }
-                        }
-                ) {
-                    @Override
-                    public Map<String, String> getHeaders(){
-                        Map<String, String> params = new HashMap();
-                        params.put("Authorization", serverKey);
-                        params.put("Content-Type", contentType);
-                        return params;
-                    }
-                    
-                };
-
-                httpFacade.addToRequestQueue(request);
-            }
-        });
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
