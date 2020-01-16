@@ -42,6 +42,7 @@ public class RegisterActivity extends AppCompatActivity {
         textSignIn = findViewById(R.id.question1);
         register = findViewById(R.id.register);
 
+
         register.setOnClickListener(new View.OnClickListener(){
 
             @SuppressLint("ShowToast")
