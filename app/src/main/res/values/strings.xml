@@ -25,6 +25,7 @@
     <string name="login_failed">"Login failed"</string>
     <string name="question1">"You do not have an account yet? Register here"</string>
     <string name="question2">"You already have an account? Sign in here"</string>
+    <string name="password_info">"The password must contain 6 characters, at least one lower case and one upper case letter and one of the symbols: !@#$%^* "</string>
     <string name="logout">Logout</string>
     <string name="title_activity_debate_location">Debate Location</string>
     <string name="qrscan">QrScan</string>

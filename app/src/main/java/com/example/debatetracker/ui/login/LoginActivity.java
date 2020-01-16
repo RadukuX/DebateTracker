@@ -42,6 +42,9 @@ public class LoginActivity extends AppCompatActivity {
         textSignIn = findViewById(R.id.question1);
         register = findViewById(R.id.register);
 
+
+
+
         mAuthStateListener = new FirebaseAuth.AuthStateListener() {
 
             FirebaseUser mFirebaseUser = mFirebaseAuth.getCurrentUser();
@@ -127,6 +130,5 @@ public class LoginActivity extends AppCompatActivity {
         super.onStart();
         mFirebaseAuth.addAuthStateListener(mAuthStateListener);
     }
-
 
 }
