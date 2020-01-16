@@ -8,14 +8,11 @@ import android.util.SparseArray;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.debatetracker.MainActivity;
 import com.example.debatetracker.R;
-import com.example.debatetracker.ui.gallery.GalleryFragment;
-import com.example.debatetracker.ui.login.LoginActivity;
-import com.example.debatetracker.ui.register.RegisterActivity;
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.barcode.Barcode;
@@ -36,7 +33,6 @@ public class QrScanner extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qr_scanner);
         surfaceView = (SurfaceView)findViewById(R.id.surfacepreview);
-        textView = findViewById(R.id.QrToString);
 
         barcodeDetector = new BarcodeDetector.Builder(this)
                 .setBarcodeFormats(Barcode.QR_CODE).build();
@@ -75,17 +71,17 @@ public class QrScanner extends AppCompatActivity {
             public void receiveDetections(Detector.Detections<Barcode> detections) {
                 final SparseArray<Barcode> qrCode = detections.getDetectedItems();
                 if(qrCode.size() != 0){
-                    textView.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            Vibrator vibrator = (Vibrator) getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
-                            vibrator.vibrate(1000);
-                            FirebaseMessaging.getInstance().subscribeToTopic("/topics/" + qrCode.valueAt(0).displayValue);
-                            Toast.makeText(QrScanner.this,"Succsesfully scanned!",Toast.LENGTH_SHORT).show();
-                            Intent i = new Intent(QrScanner.this, GalleryFragment.class);
-                            startActivity(i);
-                        }
-                    });
+                    Vibrator vibrator = (Vibrator) getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
+                    vibrator.vibrate(1000);
+                    if (qrCode.valueAt(0).displayValue.contains("DebateTracker")) {
+                        FirebaseMessaging.getInstance().subscribeToTopic("/topics/" + qrCode.valueAt(0).displayValue);
+                    }
+
+
+                    Intent i = new Intent(QrScanner.this, MainActivity.class);
+                    startActivity(i);
+
+                    barcodeDetector.release();
                 }
             }
         });
